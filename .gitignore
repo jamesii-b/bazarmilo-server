@@ -1,0 +1,6 @@
+*.vscode*
+a.out*
+*.db
+httplib.h
+index.cpp
+main.cpp
