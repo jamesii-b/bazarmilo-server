@@ -38,12 +38,12 @@ int main(int argc, char **argv)
 
                  if (result == SQLITE_ROW)
                  {
-                    res.status(200);
+                    res.status=200;
                      res.set_content("Authentication successful", "text/plain");
                  }
                  else
                  {
-                    res.status(404);
+                    res.status=404;
                      // Authentication failed
                      res.set_content("Authentication failed", "text/plain");
                  }
@@ -76,13 +76,13 @@ int main(int argc, char **argv)
                  if (result == SQLITE_ROW)
                  {
                      // Authentication successful
-                     res.status(200);
+                     res.status=200;
                      res.set_content("Authentication successful", "text/plain");
                  }
                  else
                  {
                      // Authentication failed
-                     res.status(404);
+                     res.status=404;
                      res.set_content("Authentication failed", "text/plain");
                  } });
 
@@ -111,11 +111,11 @@ int main(int argc, char **argv)
             result = sqlite3_step(stmt);
 
             if (result != SQLITE_DONE) {
-                 res.status(404);
+                 res.status=404;
                     res.set_content("Registration failed", "text/plain");
                 std::cerr << "SQL execution error: " << sqlite3_errmsg(DB) << std::endl;
             } else {
-                     res.status(200);
+                     res.status=200;
                     res.set_content("Registration successful", "text/plain");
                 std::cout << "Record inserted successfully!" << std::endl;
             }
@@ -151,12 +151,12 @@ int main(int argc, char **argv)
             result = sqlite3_step(stmt);
 
             if (result != SQLITE_DONE) {
-                                     res.status(500);
+                                     res.status=500;
                     res.set_content("Registration failed", "text/plain");
 
                 std::cerr << "SQL execution error: " << sqlite3_errmsg(DB) << std::endl;
             } else {
-                                     res.status(200);
+                                     res.status=200;
                     res.set_content("Registration successful", "text/plain");
 
                 std::cout << "Record inserted successfully!" << std::endl;
