@@ -31,6 +31,41 @@ int main(int argc, char **argv)
                      return;
                  }
 
+                 sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+                 sqlite3_bind_text(stmt, 2, password.c_str(), -1, SQLITE_STATIC);
+
+                 result = sqlite3_step(stmt);
+
+                 if (result == SQLITE_ROW)
+                 {
+                    res.status(200);
+                     res.set_content("Authentication successful", "text/plain");
+                 }
+                 else
+                 {
+                    res.status(404);
+                     // Authentication failed
+                     res.set_content("Authentication failed", "text/plain");
+                 }
+                 /*    std::cout << req.body << std::endl;
+                    res.set_content("ok", "text/plain");
+                     */ });
+
+    svr.Post("/user/login", [&](const httplib::Request &req, httplib::Response &res)
+             {
+                 nlohmann::json j = nlohmann::json::parse(req.body);
+                 std::string username = j["username"];
+                 std::string password = j["password"];
+                 std::string command = "SELECT * FROM users WHERE username = ? AND password = ?;";
+                 sqlite3_stmt *stmt;
+                 int result = sqlite3_prepare_v2(DB, command.c_str(), -1, &stmt, nullptr);
+                 if (result != SQLITE_OK)
+                 {
+                     // Handle error
+                     res.set_content("Database error", "text/plain");
+                     return;
+                 }
+
                  // Bind parameters
                  sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
                  sqlite3_bind_text(stmt, 2, password.c_str(), -1, SQLITE_STATIC);
@@ -41,16 +76,15 @@ int main(int argc, char **argv)
                  if (result == SQLITE_ROW)
                  {
                      // Authentication successful
+                     res.status(200);
                      res.set_content("Authentication successful", "text/plain");
                  }
                  else
                  {
                      // Authentication failed
+                     res.status(404);
                      res.set_content("Authentication failed", "text/plain");
-                 }
-                 /*    std::cout << req.body << std::endl;
-                    res.set_content("ok", "text/plain");
-                     */ });
+                 } });
 
     svr.Post("/user/register", [&](const httplib::Request &req, httplib::Response &res)
              {
@@ -77,8 +111,12 @@ int main(int argc, char **argv)
             result = sqlite3_step(stmt);
 
             if (result != SQLITE_DONE) {
+                 res.status(404);
+                    res.set_content("Registration failed", "text/plain");
                 std::cerr << "SQL execution error: " << sqlite3_errmsg(DB) << std::endl;
             } else {
+                     res.status(200);
+                    res.set_content("Registration successful", "text/plain");
                 std::cout << "Record inserted successfully!" << std::endl;
             }
 
@@ -113,8 +151,14 @@ int main(int argc, char **argv)
             result = sqlite3_step(stmt);
 
             if (result != SQLITE_DONE) {
+                                     res.status(500);
+                    res.set_content("Registration failed", "text/plain");
+
                 std::cerr << "SQL execution error: " << sqlite3_errmsg(DB) << std::endl;
             } else {
+                                     res.status(200);
+                    res.set_content("Registration successful", "text/plain");
+
                 std::cout << "Record inserted successfully!" << std::endl;
             }
 
@@ -122,7 +166,6 @@ int main(int argc, char **argv)
             sqlite3_finalize(stmt);
         }
 
-        std::cout << "Username: " << username << std::endl;
         std::cout << "pass: " << password << std::endl;
     } catch (const std::exception &e) {
         std::cerr << e.what() << '\n';
