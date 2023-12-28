@@ -1,16 +1,15 @@
 #include <sqlite3.h>
 #include <iostream>
+#include <cstdlib>  // for exit and EXIT_FAILURE
+
 #include "../headers/dbConnection.h"
-void dbConnection(sqlite3 *&DB)
-{
-    int exit = 0;
-    exit = sqlite3_open("../bazarmilo.db", &DB);
-    if (exit)
-    {
-        std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
-    }
-    else
-    {
+void dbConnection(sqlite3 *&DB) {
+    int exit = sqlite3_open("bazarmilo.db", &DB);
+
+    if (exit != SQLITE_OK) {
+        std::cerr << "Error open DB: " << sqlite3_errmsg(DB) << std::endl;
+        closeConnection(DB);
+    } else {
         std::cout << "Opened Database Successfully!" << std::endl;
     }
 }

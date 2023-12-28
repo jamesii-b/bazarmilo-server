@@ -10,3 +10,29 @@ Command to install `sqlite3` on `Debian` based systems:
 ```
 sudo apt-get update && sudo apt-get install sqlite3 libsqlite3-dev
 ```
+
+## Dependencies
+- `sqlite3`
+- `httplib`
+- [`nlohmann/json`]("https://github.com/nlohmann/json/blob/develop/single_include/nlohmann/json.hpp")
+## Authors
+- [`@jamesii-b`]
+
+
+## SQLITE3
+
+### Perform CRUD operation in CLI
+
+```
+.tables```
+
+```
+CREATE TABLE users ( id INTEGER PRIMARY KEY,
+    username VARCHAR(255),
+    password VARCHAR(255));```
+```
+sqlite> PRAGMA table_info(users);
+0|id|INTEGER|0||1
+1|username|VARCHAR(255)|0||0
+2|password|VARCHAR(255)|0||0
+```
