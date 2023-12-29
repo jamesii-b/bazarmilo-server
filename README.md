@@ -14,7 +14,9 @@ How to install websocketpp:
 ```
 git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir build && cd build && sudo apt install cmake -y && cmake .. && make && sudo make install
 ```
-
+```
+sudo apt-get install libboost-all-dev
+```
 ## Dependencies
 - `sqlite3`
 - `httplib`
