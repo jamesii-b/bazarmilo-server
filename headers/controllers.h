@@ -9,4 +9,5 @@ void adminRegisterDB(const nlohmann::json &data, httplib::Response &res, sqlite3
 void adminLoginDB(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB);
 void userLoginDB(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB);
 void userRegisterDB(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB);
+void userDatum(std::string id, httplib::Response &res, sqlite3 *DB);
 #endif

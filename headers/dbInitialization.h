@@ -7,5 +7,6 @@
 
 void initializeadmintable(sqlite3 *DB);
 void initializeusertable(sqlite3 *DB);
+void initializetraveltable(sqlite3 *DB);
 
 #endif
