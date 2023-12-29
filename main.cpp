@@ -6,30 +6,13 @@
 #include "./headers/json.hpp"
 #include <sqlite3.h>
 #include "./headers/controllers.h"
-// #include <websocketpp/config/asio_no_tls.hpp>
-// #include <websocketpp/server.hpp>
-
-// typedef websocketpp::server<websocketpp::config::asio> server;
-/*
-void on_message(server *s, websocketpp::connection_hdl hdl, server::message_ptr msg)
-{
-    // Handle received location update (msg->get_payload())
-    // You can broadcast the location to other connected clients here
-} */
 
 
 sqlite3 *DB; // Declare a global variable for database connection
 
 int main(int argc, char **argv)
 {
-    /*  server wsServer;
-     wsServer.set_message_handler(&on_message);
-     wsServer.init_asio();
-     wsServer.listen(5000); // Use the desired port
-     wsServer.start_accept();
-
-     wsServer.run();
-     */
+   
     dbConnection(DB);
 
     httplib::Server svr;
@@ -61,9 +44,6 @@ int main(int argc, char **argv)
             {
     auto ID = req.path_params.at("id");
 
-                /* api - /user/ID=xxx*/
-                // std::string ID = req.matches[1];
-                // getUserByID(ID, res,DB);
                 res.set_content("Database error", "text/plain");
                 std::cout << ID << std::endl; });
 
