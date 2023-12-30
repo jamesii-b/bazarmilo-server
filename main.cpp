@@ -18,7 +18,6 @@ void on_message(server *s, websocketpp::connection_hdl hdl, server::message_ptr 
     // You can broadcast the location to other connected clients here
 } */
 
-
 sqlite3 *DB; // Declare a global variable for database connection
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
@@ -71,6 +70,7 @@ void runwebSocketServer()
 
 int main(int argc, char **argv)
 {
+    std::thread websocketThread(runwebSocketServer);
     /*  server wsServer;
      wsServer.set_message_handler(&on_message);
      wsServer.init_asio();
