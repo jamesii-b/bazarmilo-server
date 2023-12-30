@@ -53,7 +53,4 @@ void userRegisterDB(const nlohmann::json &data, httplib::Response &res, sqlite3 
     std::cout << "Name: " << name << std::endl;
 }
 
-void userTaskCreation(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB)
-{
-    initializetraveltable(DB);
-}
+

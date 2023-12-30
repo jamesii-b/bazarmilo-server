@@ -57,12 +57,6 @@ sqlite> PRAGMA table_info(users);
 
 tables:
 
-travell
-    from to -coordinate
-    linking to user
-    date
-    time
-
 
 post:`http://localhost:8080/user/login`
 ```
@@ -285,6 +279,33 @@ request required:{
     "vehicleOwner":"xxx",
 }
 
+POST: `/task/create`
+request required:{
+    "username":"xxx",
+    "productID":"xxx",
+    "vehicleNumber":"xxx",
+    "latitudeFrom":"xxx",
+    "longitudeFrom":"xxx",
+    "latitudeTo":"xxx",
+    "longitudeTo":"xxx",
+    "date":"xxx",
+
+}
+
+POST: `/task/update`
+request required:{
+    "username":"xxx",
+    "productID":"xxx",
+    "delivered":"xxx",
+}
+GET: `/tasks`
+response:{
+    //everything in the table
+    "username":"xxx",
+    "productID":"xxx",
+    "delivered":"xxx",
+}
+
 
 DATABASES
 
@@ -292,3 +313,15 @@ DATABASES
     id
     vehicleNumber
     owner
+
+- productTasks
+    id
+    username
+    productID
+    vehicleNumber
+    latitudeFrom
+    longitudeFrom
+    latitudeTo
+    longitudeTo
+    date
+    delivered

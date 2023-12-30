@@ -52,32 +52,6 @@ void initializeusertable(sqlite3 *DB)
     }
 }
 
-void initializetraveltable(sqlite3 *DB)
-{
-    std::string createTableSQL = "CREATE TABLE IF NOT EXISTS travel ("
-                                 "userID INTEGER,"
-                                 "from_location VARCHAR(255) NOT NULL,"
-                                 "to_location VARCHAR(255) NOT NULL,"
-                                 "date TEXT NOT NULL,"
-                                 "time TEXT NOT NULL,"
-                                 "FOREIGN KEY (userID) REFERENCES users(id)"
-                                 ");";
-
-    char *errMsg = nullptr;
-    int result = sqlite3_exec(DB, createTableSQL.c_str(), nullptr, nullptr, &errMsg);
-
-    if (result != SQLITE_OK)
-    {
-        std::cerr << "SQL error during table creation: " << errMsg << std::endl;
-        sqlite3_free(errMsg);
-        exit(EXIT_FAILURE);
-    }
-    else
-    {
-        std::cout << "Table 'travel' created successfully!" << std::endl;
-    }
-}
-
 void initializeVehicleTable(sqlite3 *DB)
 {
     std::string createTableSQL = "CREATE TABLE IF NOT EXISTS vehicles ("
@@ -98,5 +72,37 @@ void initializeVehicleTable(sqlite3 *DB)
     else
     {
         std::cout << "Table 'vehicles' created successfully!" << std::endl;
+    }
+}
+
+void initializeProductTaskTable(sqlite3 *DB)
+{
+    std::string createTableSQL = "CREATE TABLE IF NOT EXISTS productTasks ("
+                                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                 "productID VARCHAR(255) NOT NULL,"
+                                 "username VARCHAR(255) NOT NULL,"
+                                 "vehicleNumber VARCHAR(255) NOT NULL,"
+                                 "latitudeFrom DECIMAL(9,6) NOT NULL,"
+                                 "longitudeFrom DECIMAL(9,6) NOT NULL,"
+                                 "latitudeTo DECIMAL(9,6) NOT NULL,"
+                                 "longitudeTo DECIMAL(9,6) NOT NULL,"
+                                 "date DATE NOT NULL,"
+                                 "delivered INTEGER DEFAULT 0,"
+                                 "FOREIGN KEY (vehicleNumber) REFERENCES vehicles(vehicleNumber),"
+                                 "FOREIGN KEY (username) REFERENCES users(username)"
+                                 ");";
+
+    char *errMsg = nullptr;
+    int result = sqlite3_exec(DB, createTableSQL.c_str(), nullptr, nullptr, &errMsg);
+
+    if (result != SQLITE_OK)
+    {
+        std::cerr << "SQL error during productTask table creation: " << errMsg << std::endl;
+        sqlite3_free(errMsg);
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        std::cout << "Table 'productTask' created successfully!" << std::endl;
     }
 }

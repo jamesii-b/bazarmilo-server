@@ -134,6 +134,19 @@ int main(int argc, char **argv)
     nlohmann::json j = nlohmann::json::parse(req.body);
                 createVehicles(j, res, DB); });
 
+    svr.Post("/task/create", [&](const httplib::Request &req, httplib::Response &res)
+             {
+        nlohmann::json j = nlohmann::json::parse(req.body);
+        createTask(j, res, DB); });
+    svr.Post("/task/update", [&](const httplib::Request &req, httplib::Response &res)
+             {
+        nlohmann::json j = nlohmann::json::parse(req.body);
+        updateTask(j, res, DB); });
+    
+    svr.Get("/tasks", [&](const httplib::Request &req, httplib::Response &res)
+            {
+    getTasks(res, DB); });
+
     try
     {
         svr.listen("localhost", 8080);
