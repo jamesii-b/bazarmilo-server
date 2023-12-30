@@ -1,18 +1,84 @@
 // main.cpp
 #include <iostream>
+#include <thread>
 #include "./headers/httplib.h"
 #include "./headers/dbConnection.h"
 #include "./headers/dbInitialization.h"
 #include "./headers/json.hpp"
 #include <sqlite3.h>
 #include "./headers/controllers.h"
+// #include <websocketpp/config/asio_no_tls.hpp>
+// #include <websocketpp/server.hpp>
+
+// typedef websocketpp::server<websocketpp::config::asio> server;
+/*
+void on_message(server *s, websocketpp::connection_hdl hdl, server::message_ptr msg)
+{
+    // Handle received location update (msg->get_payload())
+    // You can broadcast the location to other connected clients here
+} */
 
 
 sqlite3 *DB; // Declare a global variable for database connection
+#include <websocketpp/config/asio_no_tls.hpp>
+#include <websocketpp/server.hpp>
+
+typedef websocketpp::server<websocketpp::config::asio> WebSocketServer;
+
+// ...
+
+// Initialize WebSocket server
+
+// Define a handler for incoming WebSocket messages
+void on_message(websocketpp::connection_hdl hdl, WebSocketServer::message_ptr msg)
+{
+    try
+    {
+        nlohmann::json j = nlohmann::json::parse(msg->get_payload());
+        // Handle location update received from mobile app
+        // You can parse the JSON message and store/update the location data in your C++ server
+        // Example: Update location in a data structure or database
+        std::cout << "Location update received from mobile app \n \n"
+                  << j << std::endl;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+    }
+}
+
+// WebSocket endpoint to receive location updates from the mobile app
+
+void runwebSocketServer()
+{
+    try
+    {
+        WebSocketServer ws_svr;
+        ws_svr.set_message_handler(on_message);
+
+        // WebSocket endpoint for the desktop application to connect and receive location updates
+        ws_svr.init_asio();
+        ws_svr.listen(8081);
+        ws_svr.start_accept();
+        ws_svr.run();
+    }
+
+    catch (const std::exception &e)
+    {
+        std::cerr << "WebSocket server error: " << e.what() << std::endl;
+    }
+}
 
 int main(int argc, char **argv)
 {
-   
+    /*  server wsServer;
+     wsServer.set_message_handler(&on_message);
+     wsServer.init_asio();
+     wsServer.listen(5000); // Use the desired port
+     wsServer.start_accept();
+
+     wsServer.run();
+     */
     dbConnection(DB);
 
     httplib::Server svr;
@@ -20,6 +86,11 @@ int main(int argc, char **argv)
     // Routes
     svr.Get("/", [](const httplib::Request &req, httplib::Response &res)
             { res.set_content("hello~", "text/plain"); });
+    svr.Get("/ws", [&](const httplib::Request &req, httplib::Response &res)
+            {
+                res.set_content("WebSocket connection established", "text/plain");
+                // You can send location updates to the desktop application here
+            });
 
     svr.Post("/admin/login", [](const httplib::Request &req, httplib::Response &res)
              {
@@ -44,6 +115,9 @@ int main(int argc, char **argv)
             {
     auto ID = req.path_params.at("id");
 
+                /* api - /user/ID=xxx*/
+                // std::string ID = req.matches[1];
+                // getUserByID(ID, res,DB);
                 res.set_content("Database error", "text/plain");
                 std::cout << ID << std::endl; });
 
@@ -52,7 +126,23 @@ int main(int argc, char **argv)
     auto ID = req.path_params.at("id");
     userDatum(ID, res, DB); });
 
-    svr.listen("localhost", 8080);
+    svr.Get("/vehicles", [&](const httplib::Request &req, httplib::Response &res)
+            { getVehicles(res, DB); });
+    svr.Post("/vehicle/register", [&](const httplib::Request &req, httplib::Response &res)
+
+             { 
+    nlohmann::json j = nlohmann::json::parse(req.body);
+                createVehicles(j, res, DB); });
+
+    try
+    {
+        svr.listen("localhost", 8080);
+        websocketThread.join();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Server error: " << e.what() << std::endl;
+    }
     closeConnection(DB);
     return 0;
 }

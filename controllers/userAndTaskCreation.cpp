@@ -4,8 +4,6 @@
 #include "../headers/dbInitialization.h"
 #include <iostream>
 
-sqlite3 *DB; // Declare a global variable for database connection
-
 void userRegisterDB(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB)
 {
     initializeusertable(DB);

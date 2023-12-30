@@ -8,5 +8,6 @@
 void initializeadmintable(sqlite3 *DB);
 void initializeusertable(sqlite3 *DB);
 void initializetraveltable(sqlite3 *DB);
+void initializeVehicleTable(sqlite3 *DB);
 
 #endif

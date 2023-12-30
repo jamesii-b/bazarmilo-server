@@ -14,7 +14,13 @@ How to install websocketpp:
 ```
 git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir build && cd build && sudo apt install cmake -y && cmake .. && make && sudo make install
 ```
-
+How to install websocketpp:
+```
+git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir build && cd build && sudo apt install cmake -y && cmake .. && make && sudo make install
+```
+```
+sudo apt-get install libboost-all-dev
+```
 ## Dependencies
 - `sqlite3`
 - `httplib`
@@ -37,6 +43,11 @@ git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir 
 CREATE TABLE users ( id INTEGER PRIMARY KEY,
     username VARCHAR(255),
     password VARCHAR(255));```
+```
+
+```
+DROP TABLE IF EXISTS tableName;
+
 ```
 sqlite> PRAGMA table_info(users);
 0|id|INTEGER|0||1
@@ -153,3 +164,131 @@ response:{
     "licensenumber":xxx,
 }
 ```
+
+tables:
+
+travell
+    from to -coordinate
+    linking to user
+    date
+    time
+
+
+post:`http://localhost:8080/user/login`
+```
+{
+    "password": "jamesb",
+    "username": "jamesb"
+}
+```
+
+post:`http://localhost:8080/admin/login`
+```
+{
+    "password": "jamesb",
+    "username": "jamesb"
+}
+```
+post:`http://localhost:8080/admin/register`
+```
+{
+    "password": "jamesb",
+    "username": "jamesb"
+}
+```
+GET:`/user/travel/xxx` 
+```
+response:{
+    {
+        "date:"xxx",
+        "time:"xxx",
+    "from":{
+        "lat":xxx,
+        "lon":xxx
+    },
+    "to":{
+        "lat":xxx,
+        "lon":xxx
+    },
+    },
+    ......
+}
+```
+POST:`/user/travel/register/xxx` 
+```
+response:{
+    {
+        "date:"xxx",
+        "time:"xxx",
+    "from":{
+        "lat":xxx,
+        "lon":xxx
+    },
+    "to":{
+        "lat":xxx,
+        "lon":xxx
+    },
+    },
+    ......
+}
+```
+POST:`/user/register` 
+```
+{
+    "fullname":xxx,
+    "username":xxx,
+    "password":xxx,
+    "contactnumber":xxx,
+    "licensenumber":xxx,
+}
+```
+}
+
+
+```
+response:{
+    {
+        "date:"xxx",
+        "time:"xxx",
+    "from":{
+        "lat":xxx,
+        "lon":xxx
+    },
+    "to":{
+        "lat":xxx,
+        "lon":xxx
+    },
+    },
+    ......
+}
+```
+
+
+GET:`/user/data/xxx` done
+```
+response:{
+    "fullname":xxx,
+    "username":xxx,
+    "password":xxx,
+    "contactnumber":xxx,
+    "licensenumber":xxx,
+}
+```
+
+GET:`/vehicles`
+response:{
+
+}
+POST:`/vehicle/register`
+request required:{
+    "vehicleNumber":"xxx",
+    "vehicleOwner":"xxx",
+}
+
+
+DATABASES
+
+- vehicles
+    id
+    vehicleNumber
+    owner
