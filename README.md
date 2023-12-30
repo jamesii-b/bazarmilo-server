@@ -40,6 +40,11 @@ CREATE TABLE users ( id INTEGER PRIMARY KEY,
     username VARCHAR(255),
     password VARCHAR(255));```
 ```
+
+```
+DROP TABLE IF EXISTS tableName;
+
+```
 sqlite> PRAGMA table_info(users);
 0|id|INTEGER|0||1
 1|username|VARCHAR(255)|0||0
@@ -155,3 +160,21 @@ response:{
     "licensenumber":xxx,
 }
 ```
+
+GET:`/vehicles`
+response:{
+
+}
+POST:`/vehicle/register`
+request required:{
+    "vehicleNumber":"xxx",
+    "vehicleOwner":"xxx",
+}
+
+
+DATABASES
+
+- vehicles
+    id
+    vehicleNumber
+    owner

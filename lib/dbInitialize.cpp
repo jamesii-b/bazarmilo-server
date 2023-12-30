@@ -77,3 +77,26 @@ void initializetraveltable(sqlite3 *DB)
         std::cout << "Table 'travel' created successfully!" << std::endl;
     }
 }
+
+void initializeVehicleTable(sqlite3 *DB)
+{
+    std::string createTableSQL = "CREATE TABLE IF NOT EXISTS vehicles ("
+                                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                 "vehicleNumber VARCHAR(255) NOT NULL,"
+                                 "vehicleOwner VARCHAR(255) NOT NULL"
+                                 ");";
+
+    char *errMsg = nullptr;
+    int result = sqlite3_exec(DB, createTableSQL.c_str(), nullptr, nullptr, &errMsg);
+
+    if (result != SQLITE_OK)
+    {
+        std::cerr << "SQL error during table creation: " << errMsg << std::endl;
+        sqlite3_free(errMsg);
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        std::cout << "Table 'vehicles' created successfully!" << std::endl;
+    }
+}

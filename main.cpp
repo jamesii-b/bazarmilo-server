@@ -101,7 +101,6 @@ int main(int argc, char **argv)
     svr.Get("/user/travel/:id", [&](const httplib::Request &req, httplib::Response &res)
             {
     auto ID = req.path_params.at("id");
-
                 res.set_content("Database error", "text/plain");
                 std::cout << ID << std::endl; });
 
@@ -109,6 +108,15 @@ int main(int argc, char **argv)
             {
     auto ID = req.path_params.at("id");
     userDatum(ID, res, DB); });
+
+    svr.Get("/vehicles", [&](const httplib::Request &req, httplib::Response &res)
+            { getVehicles(res, DB); });
+    svr.Post("/vehicle/register", [&](const httplib::Request &req, httplib::Response &res)
+
+             { 
+    nlohmann::json j = nlohmann::json::parse(req.body);
+                createVehicles(j, res, DB); });
+
     try
     {
         svr.listen("localhost", 8080);
