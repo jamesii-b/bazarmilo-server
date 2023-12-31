@@ -32,7 +32,9 @@ void initializeusertable(sqlite3 *DB)
                                  "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                                  "username VARCHAR(255) NOT NULL,"
                                  "password VARCHAR(255) NOT NULL,"
+                                 "email VARCHAR(255) NOT NULL,"
                                  "fullname TEXT NOT NULL,"
+                                 "address VARCHAR(300) NOT NULL,"
                                  "contactnum VARCHAR(255) NOT NULL,"
                                  "licensenum VARCHAR(255) NOT NULL"
                                  ");";

@@ -12,7 +12,9 @@ void userRegisterDB(const nlohmann::json &data, httplib::Response &res, sqlite3 
     std::string username = data["username"];
     std::string password = data["password"];
     std::string contactnum = data["contactnum"];
-    std::string command = "INSERT INTO users (username, password, licensenum, fullname, contactnum) VALUES (?, ?, ?, ?, ?);";
+    std::string email = data["email"];
+    std::string address = data["address"];
+    std::string command = "INSERT INTO users (username, password, licensenum, fullname, contactnum, email, address) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
     sqlite3_stmt *stmt;
     int result = sqlite3_prepare_v2(DB, command.c_str(), -1, &stmt, nullptr);
@@ -30,6 +32,8 @@ void userRegisterDB(const nlohmann::json &data, httplib::Response &res, sqlite3 
         sqlite3_bind_text(stmt, 3, licensenum.c_str(), -1, SQLITE_STATIC);
         sqlite3_bind_text(stmt, 4, name.c_str(), -1, SQLITE_STATIC);
         sqlite3_bind_text(stmt, 5, contactnum.c_str(), -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 6, email.c_str(), -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 7, address.c_str(), -1, SQLITE_STATIC);
 
         result = sqlite3_step(stmt);
 
@@ -52,5 +56,3 @@ void userRegisterDB(const nlohmann::json &data, httplib::Response &res, sqlite3 
     std::cout << "Username: " << username << std::endl;
     std::cout << "Name: " << name << std::endl;
 }
-
-

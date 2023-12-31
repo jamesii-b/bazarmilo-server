@@ -55,67 +55,8 @@ sqlite> PRAGMA table_info(users);
 2|password|VARCHAR(255)|0||0
 ```
 
-tables:
+Endpoints:
 
-
-post:`http://localhost:8080/user/login`
-```
-{
-    "password": "jamesb",
-    "username": "jamesb"
-}
-```
-
-post:`http://localhost:8080/admin/login`
-```
-{
-    "password": "jamesb",
-    "username": "jamesb"
-}
-```
-post:`http://localhost:8080/admin/register`
-```
-{
-    "password": "jamesb",
-    "username": "jamesb"
-}
-```
-GET:`/user/travel/xxx` 
-```
-response:{
-    {
-        "date:"xxx",
-        "time:"xxx",
-    "from":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    "to":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    },
-    ......
-}
-```
-POST:`/user/travel/register/xxx` 
-```
-response:{
-    {
-        "date:"xxx",
-        "time:"xxx",
-    "from":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    "to":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    },
-    ......
-}
-```
 POST:`/user/register` 
 ```
 {
@@ -124,51 +65,12 @@ POST:`/user/register`
     "password":xxx,
     "contactnumber":xxx,
     "licensenumber":xxx,
-}
-```
-}
-
-
-```
-response:{
-    {
-        "date:"xxx",
-        "time:"xxx",
-    "from":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    "to":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    },
-    ......
+    "email":xxx,
+    "address":xxx,
 }
 ```
 
-
-GET:`/user/data/xxx` done
-```
-response:{
-    "fullname":xxx,
-    "username":xxx,
-    "password":xxx,
-    "contactnumber":xxx,
-    "licensenumber":xxx,
-}
-```
-
-tables:
-
-travell
-    from to -coordinate
-    linking to user
-    date
-    time
-
-
-post:`http://localhost:8080/user/login`
+post:`/user/login`
 ```
 {
     "password": "jamesb",
@@ -176,110 +78,56 @@ post:`http://localhost:8080/user/login`
 }
 ```
 
-post:`http://localhost:8080/admin/login`
+post:`/admin/login`
 ```
 {
     "password": "jamesb",
     "username": "jamesb"
 }
 ```
-post:`http://localhost:8080/admin/register`
+post:`/admin/register`
 ```
 {
     "password": "jamesb",
     "username": "jamesb"
 }
 ```
-GET:`/user/travel/xxx` 
+
+GET:`/user/data/id__` done
 ```
 response:{
-    {
-        "date:"xxx",
-        "time:"xxx",
-    "from":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    "to":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    },
-    ......
-}
-```
-POST:`/user/travel/register/xxx` 
-```
-response:{
-    {
-        "date:"xxx",
-        "time:"xxx",
-    "from":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    "to":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    },
-    ......
-}
-```
-POST:`/user/register` 
-```
-{
-    "fullname":xxx,
+     "fullname":xxx,
     "username":xxx,
     "password":xxx,
     "contactnumber":xxx,
     "licensenumber":xxx,
-}
-```
-}
-
-
-```
-response:{
-    {
-        "date:"xxx",
-        "time:"xxx",
-    "from":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    "to":{
-        "lat":xxx,
-        "lon":xxx
-    },
-    },
-    ......
-}
-```
-
-
-GET:`/user/data/xxx` done
-```
-response:{
-    "fullname":xxx,
-    "username":xxx,
-    "password":xxx,
-    "contactnumber":xxx,
-    "licensenumber":xxx,
+    "email":xxx,
+    "address":xxx,
 }
 ```
 
 GET:`/vehicles`
-response:{
+response:
+```
+[
+    {
+        "id": "xx",
+        "vehicleNumber": "xxxx",
+        "vehicleOwner": "xxx"
+    }
+]
+```
 
-}
 POST:`/vehicle/register`
+```
 request required:{
     "vehicleNumber":"xxx",
     "vehicleOwner":"xxx",
 }
+```
 
 POST: `/task/create`
+```
 request required:{
     "username":"xxx",
     "productID":"xxx",
@@ -291,21 +139,25 @@ request required:{
     "date":"xxx",
 
 }
+```
 
 POST: `/task/update`
+```
 request required:{
     "username":"xxx",
     "productID":"xxx",
     "delivered":"xxx",
 }
+```
 GET: `/tasks`
+```
 response:{
     //everything in the table
     "username":"xxx",
     "productID":"xxx",
     "delivered":"xxx",
 }
-
+```
 
 DATABASES
 

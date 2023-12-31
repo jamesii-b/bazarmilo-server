@@ -111,15 +111,7 @@ int main(int argc, char **argv)
              {
         nlohmann::json j = nlohmann::json::parse(req.body);
         userRegisterDB(j, res,DB); });
-    svr.Get("/user/travel/:id", [&](const httplib::Request &req, httplib::Response &res)
-            {
-    auto ID = req.path_params.at("id");
 
-                /* api - /user/ID=xxx*/
-                // std::string ID = req.matches[1];
-                // getUserByID(ID, res,DB);
-                res.set_content("Database error", "text/plain");
-                std::cout << ID << std::endl; });
 
     svr.Get("/user/datum/:id", [&](const httplib::Request &req, httplib::Response &res)
             {
