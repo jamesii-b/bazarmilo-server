@@ -5,7 +5,7 @@
 
 void userDatum(std::string id, httplib::Response &res, sqlite3 *DB)
 {
-    std::string command = "SELECT * FROM users WHERE id = ?;";
+    std::string command = "SELECT * FROM users WHERE username = ?;";
     sqlite3_stmt *stmt;
 
     int result = sqlite3_prepare_v2(DB, command.c_str(), -1, &stmt, nullptr);
