@@ -63,8 +63,8 @@ POST:`/user/register`
     "fullname":xxx,
     "username":xxx,
     "password":xxx,
-    "contactnumber":xxx,
-    "licensenumber":xxx,
+    "contactnum":xxx,
+    "licensenum":xxx,
     "email":xxx,
     "address":xxx,
 }
@@ -99,8 +99,8 @@ response:{
      "fullname":xxx,
     "username":xxx,
     "password":xxx,
-    "contactnumber":xxx,
-    "licensenumber":xxx,
+    "contactnum":xxx,
+    "licensenum":xxx,
     "email":xxx,
     "address":xxx,
 }
