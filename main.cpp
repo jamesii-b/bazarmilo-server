@@ -19,58 +19,58 @@ void on_message(server *s, websocketpp::connection_hdl hdl, server::message_ptr 
 } */
 
 sqlite3 *DB; // Declare a global variable for database connection
-#include <websocketpp/config/asio_no_tls.hpp>
-#include <websocketpp/server.hpp>
+// #include <websocketpp/config/asio_no_tls.hpp>
+// #include <websocketpp/server.hpp>
 
-typedef websocketpp::server<websocketpp::config::asio> WebSocketServer;
+// typedef websocketpp::server<websocketpp::config::asio> WebSocketServer;
 
-// ...
+// // ...
 
-// Initialize WebSocket server
+// // Initialize WebSocket server
 
-// Define a handler for incoming WebSocket messages
-void on_message(websocketpp::connection_hdl hdl, WebSocketServer::message_ptr msg)
-{
-    try
-    {
-        nlohmann::json j = nlohmann::json::parse(msg->get_payload());
-        // Handle location update received from mobile app
-        // You can parse the JSON message and store/update the location data in your C++ server
-        // Example: Update location in a data structure or database
-        std::cout << "Location update received from mobile app \n \n"
-                  << j << std::endl;
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Error parsing JSON: " << e.what() << std::endl;
-    }
-}
+// // Define a handler for incoming WebSocket messages
+// void on_message(websocketpp::connection_hdl hdl, WebSocketServer::message_ptr msg)
+// {
+//     try
+//     {
+//         nlohmann::json j = nlohmann::json::parse(msg->get_payload());
+//         // Handle location update received from mobile app
+//         // You can parse the JSON message and store/update the location data in your C++ server
+//         // Example: Update location in a data structure or database
+//         std::cout << "Location update received from mobile app \n \n"
+//                   << j << std::endl;
+//     }
+//     catch (const std::exception &e)
+//     {
+//         std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+//     }
+// }
 
 // WebSocket endpoint to receive location updates from the mobile app
 
-void runwebSocketServer()
-{
-    try
-    {
-        WebSocketServer ws_svr;
-        ws_svr.set_message_handler(on_message);
+// void runwebSocketServer()
+// {
+//     try
+//     {
+//         WebSocketServer ws_svr;
+//         ws_svr.set_message_handler(on_message);
 
-        // WebSocket endpoint for the desktop application to connect and receive location updates
-        ws_svr.init_asio();
-        ws_svr.listen(8081);
-        ws_svr.start_accept();
-        ws_svr.run();
-    }
+//         // WebSocket endpoint for the desktop application to connect and receive location updates
+//         ws_svr.init_asio();
+//         ws_svr.listen(8081);
+//         ws_svr.start_accept();
+//         ws_svr.run();
+//     }
 
-    catch (const std::exception &e)
-    {
-        std::cerr << "WebSocket server error: " << e.what() << std::endl;
-    }
-}
+//     catch (const std::exception &e)
+//     {
+//         std::cerr << "WebSocket server error: " << e.what() << std::endl;
+//     }
+// }
 
 int main(int argc, char **argv)
 {
-    std::thread websocketThread(runwebSocketServer);
+    // std::thread websocketThread(runwebSocketServer);
     /*  server wsServer;
      wsServer.set_message_handler(&on_message);
      wsServer.init_asio();
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
     try
     {
         svr.listen("localhost", 8080);
-        websocketThread.join();
+        // websocketThread.join();
     }
     catch (const std::exception &e)
     {
