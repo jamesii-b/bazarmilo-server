@@ -132,8 +132,6 @@ request required:{
     "username":"xxx",
     "productID":"xxx",
     "vehicleNumber":"xxx",
-    "latitudeFrom":"xxx",
-    "longitudeFrom":"xxx",
     "latitudeTo":"xxx",
     "longitudeTo":"xxx",
     "date":"xxx",

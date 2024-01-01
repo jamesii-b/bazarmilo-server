@@ -84,8 +84,6 @@ void initializeProductTaskTable(sqlite3 *DB)
                                  "productID VARCHAR(255) NOT NULL,"
                                  "username VARCHAR(255) NOT NULL,"
                                  "vehicleNumber VARCHAR(255) NOT NULL,"
-                                 "latitudeFrom DECIMAL(9,6) NOT NULL,"
-                                 "longitudeFrom DECIMAL(9,6) NOT NULL,"
                                  "latitudeTo DECIMAL(9,6) NOT NULL,"
                                  "longitudeTo DECIMAL(9,6) NOT NULL,"
                                  "date DATE NOT NULL,"

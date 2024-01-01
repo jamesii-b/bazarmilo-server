@@ -7,58 +7,64 @@
 void createTask(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB)
 {
     initializeProductTaskTable(DB);
-
-    std::string username = data["username"];
-    std::string productID = data["productID"];
-    std::string vehicleNumber = data["vehicleNumber"]; // Fixed the typo in the key "vehicleNumer"
-    std::string latitudeFrom = data["latitudeFrom"];
-    std::string longitudeFrom = data["longitudeFrom"];
-    std::string latitudeTo = data["latitudeTo"];
-    std::string longitudeTo = data["longitudeTo"];
-    std::string date = data["date"];
-
-    std::string command = "INSERT INTO productTasks (username, productID, vehicleNumber, latitudeFrom, longitudeFrom, latitudeTo, longitudeTo, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-
-    sqlite3_stmt *stmt;
-    int result = sqlite3_prepare_v2(DB, command.c_str(), -1, &stmt, nullptr);
-
-    if (result != SQLITE_OK)
+    try
     {
-        res.status = 404;
-        res.set_content("Task creation failed", "text/plain");
-        std::cerr << "SQL prepare error: " << sqlite3_errmsg(DB) << std::endl;
-    }
-    else
-    {
-        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 2, productID.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 3, vehicleNumber.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 4, latitudeFrom.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 5, longitudeFrom.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 6, latitudeTo.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 7, longitudeTo.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 8, date.c_str(), -1, SQLITE_STATIC);
 
-        result = sqlite3_step(stmt);
+        std::string username = data["username"];
+        std::string productID = data["productID"];
+        std::string vehicleNumber = data["vehicleNumber"]; // Fixed the typo in the key "vehicleNumer"
+        std::string latitudeTo = data["latitudeTo"];
+        std::string longitudeTo = data["longitudeTo"];
+        std::string date = data["date"];
 
-        if (result != SQLITE_DONE)
+        std::string command = "INSERT INTO productTasks (username, productID, vehicleNumber, latitudeTo, longitudeTo, date) VALUES (?, ?, ?, ?, ?, ?);";
+
+        sqlite3_stmt *stmt;
+        int result = sqlite3_prepare_v2(DB, command.c_str(), -1, &stmt, nullptr);
+
+        if (result != SQLITE_OK)
         {
             res.status = 404;
             res.set_content("Task creation failed", "text/plain");
-            std::cerr << "SQL execution error: " << sqlite3_errmsg(DB) << std::endl;
+            std::cerr << "SQL prepare error: " << sqlite3_errmsg(DB) << std::endl;
         }
         else
         {
-            res.status = 200;
-            res.set_content("Task created successfully", "text/plain");
-            std::cout << "Task inserted successfully!" << std::endl;
+            sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 2, productID.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 3, vehicleNumber.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 4, latitudeTo.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 5, longitudeTo.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 6, date.c_str(), -1, SQLITE_STATIC);
+
+            result = sqlite3_step(stmt);
+
+            if (result != SQLITE_DONE)
+            {
+                res.status = 404;
+                res.set_content("Task creation failed", "text/plain");
+                std::cerr << "SQL execution error: " << sqlite3_errmsg(DB) << std::endl;
+            }
+            else
+            {
+                res.status = 200;
+                res.set_content("Task created successfully", "text/plain");
+                std::cout << "Task inserted successfully!" << std::endl;
+            }
+
+            sqlite3_finalize(stmt);
         }
 
-        sqlite3_finalize(stmt);
+        std::cout << "Username: " << username << std::endl;
+        std::cout << "Product ID: " << productID << std::endl;
     }
+    catch (const std::exception &e)
+    {
+        res.status = 404;
+        res.set_content("Task creation failed", "text/plain");
 
-    std::cout << "Username: " << username << std::endl;
-    std::cout << "Product ID: " << productID << std::endl;
+        std::cerr << e.what() << '\n';
+    }
 }
 
 void updateTask(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB)
