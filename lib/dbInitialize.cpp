@@ -87,7 +87,7 @@ void initializeProductTaskTable(sqlite3 *DB)
                                  "latitudeTo DECIMAL(9,6) NOT NULL,"
                                  "longitudeTo DECIMAL(9,6) NOT NULL,"
                                  "date DATE NOT NULL,"
-                                 "delivered INTEGER DEFAULT 0,"
+                                 "delivered STRING DEFAULT no,"
                                  "FOREIGN KEY (vehicleNumber) REFERENCES vehicles(vehicleNumber),"
                                  "FOREIGN KEY (username) REFERENCES users(username)"
                                  ");";

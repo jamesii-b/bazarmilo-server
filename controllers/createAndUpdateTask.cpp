@@ -71,13 +71,6 @@ void updateTask(const nlohmann::json &data, httplib::Response &res, sqlite3 *DB)
 {
     std::string productID = data["productID"];
     int delivered = data["delivered"];
-    if (delivered != 1 && delivered != 0)
-    {
-        res.status = 404;
-        res.set_content("Task update failed", "text/plain");
-        std::cerr << "SQL execution error: " << sqlite3_errmsg(DB) << std::endl;
-        return;
-    }
     std::string command = "UPDATE productTasks SET delivered = ? WHERE productID = ?;";
     sqlite3_stmt *stmt;
     int result = sqlite3_prepare_v2(DB, command.c_str(), -1, &stmt, nullptr);

@@ -142,11 +142,13 @@ request required:{
 POST: `/task/update`
 ```
 request required:{
-    "username":"xxx",
+    
     "productID":"xxx",
     "delivered":"xxx",
 }
 ```
+delivered to yes, default no
+
 GET: `/tasks`
 ```
 response:{
