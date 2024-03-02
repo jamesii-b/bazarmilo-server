@@ -1,26 +1,8 @@
-# Bazarmilo Server
-This is the server for the Bazarmilo Project. This project uses the framework `httplib` used as `httplib.h` & database `sqlite3`.
+# Bazarmilo Logistics System 
 
-## How to run
-- g++ main.cpp  -l sqlite3
-```
-If you haven't installed sqlite3 you should first install sqlite3.
-```
-Command to install `sqlite3` on `Debian` based systems:
-```
-sudo apt-get update && sudo apt-get install sqlite3 libsqlite3-dev
-```
-How to install websocketpp:
-```
-git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir build && cd build && sudo apt install cmake -y && cmake .. && make && sudo make install
-```
-How to install websocketpp:
-```
-git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir build && cd build && sudo apt install cmake -y && cmake .. && make && sudo make install
-```
-```
-sudo apt-get install libboost-all-dev
-```
+## Overview
+This project is a comprehensive logistics system designed to streamline operations and enhance efficiency. It consists of a robust web server developed in C++. The system incorporates real-time tracking features powered by OpenStreetMap (OSM), user authentication for security, and dynamic task management capabilities.
+
 ## Dependencies
 - `sqlite3`
 - `httplib`
@@ -28,153 +10,42 @@ sudo apt-get install libboost-all-dev
 - [`websocketpp`]("https://github.com/zaphoyd/websocketpp.git")
 
 
-## Authors
-- [`@jamesii-b`]
+## 🌟 Features
+- **Real-time Tracking**: Utilizes OpenStreetMap for accurate and up-to-date location tracking.
+- **User Authentication**: Secure access control to ensure data privacy and integrity.
+- **Task Management**: Enables users to create, update, and monitor tasks in real-time.
+- **Mobile Integration**: Companion Flutter mobile app for on-the-go access and management.
+
+## 💻 Technologies
+- **Backend**: C++ for the web server, integrating with SQLite3 for database management.
+- **Frontend**: Flutter framework for cross-platform mobile development.
+- **Mapping**: Integration with OpenStreetMap for geospatial functionality.
+- **Networking**: Utilizes httplib for handling HTTP requests and WebSocket communication.
 
 
-## SQLITE3
-
-### Perform CRUD operation in CLI
-
+## 🚀 How to Use
+1. Clone the repository to your local machine.
 ```
-.tables```
-
+git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir build && cd build && sudo apt install cmake -y && cmake .. && make && sudo make install
 ```
-CREATE TABLE users ( id INTEGER PRIMARY KEY,
-    username VARCHAR(255),
-    password VARCHAR(255));```
-```
+2.  Set up the necessary dependencies for the C++ server 
 
 ```
-DROP TABLE IF EXISTS tableName;
-
+sudo apt-get update && sudo apt-get install sqlite3 libsqlite3-dev
 ```
-sqlite> PRAGMA table_info(users);
-0|id|INTEGER|0||1
-1|username|VARCHAR(255)|0||0
-2|password|VARCHAR(255)|0||0
 ```
-
-Endpoints:
-
-POST:`/user/register` 
+git clone https://github.com/zaphoyd/websocketpp.git && cd websocketpp && mkdir build && cd build && sudo apt install cmake -y && cmake .. && make && sudo make install
 ```
-{
-    "fullname":xxx,
-    "username":xxx,
-    "password":xxx,
-    "contactnum":xxx,
-    "licensenum":xxx,
-    "email":xxx,
-    "address":xxx,
-}
+3. Run the C++ server and deploy the Flutter app to your preferred mobile device or emulator.
+```
+ g++ main.cpp  -l sqlite3 && ./a.out
 ```
 
-post:`/user/login`
-```
-{
-    "password": "jamesb",
-    "username": "jamesb"
-}
-```
+4. Access the system through the provided interfaces and explore the features.
 
-post:`/admin/login`
-```
-{
-    "password": "jamesb",
-    "username": "jamesb"
-}
-```
-post:`/admin/register`
-```
-{
-    "password": "jamesb",
-    "username": "jamesb"
-}
-```
+## 🤝 Contributing
+Contributions are welcome! If you'd like to contribute to this project, please follow the standard guidelines for pull requests and issue reporting.
 
-GET:`/user/data/id__` done
-```
-response:{
-     "fullname":xxx,
-    "username":xxx,
-    "password":xxx,
-    "contactnum":xxx,
-    "licensenum":xxx,
-    "email":xxx,
-    "address":xxx,
-}
-```
+## 📧 Contact
+For inquiries or support, feel free to contact  [jamesii-b](https://github.com/jamesii-b).
 
-GET:`/vehicles`
-response:
-```
-[
-    {
-        "id": "xx",
-        "vehicleNumber": "xxxx",
-        "vehicleOwner": "xxx"
-    }
-]
-```
-
-POST:`/vehicle/register`
-```
-request required:{
-    "vehicleNumber":"xxx",
-    "vehicleOwner":"xxx",
-}
-```
-
-POST: `/task/create`
-```
-request required:{
-    "username":"xxx",
-    "productID":"xxx",
-    "vehicleNumber":"xxx",
-    "latitudeTo":"xxx",
-    "longitudeTo":"xxx",
-    "date":"xxx",
-
-}
-```
-
-POST: `/task/update`
-```
-request required:{
-    
-    "productID":"xxx",
-    "delivered":"xxx",
-}
-```
-delivered to yes, default no
-
-GET: `/tasks`
-```
-response:{
-    //everything in the table
-    "username":"xxx",
-    "productID":"xxx",
-    "delivered":"xxx",
-}
-```
-
-Database Model
-```
-- vehicles
-     id
-    vehicleNumber
-    owner
-
-- productTasks
-    id
-    username
-    productID
-    vehicleNumber
-    latitudeFrom
-    longitudeFrom
-    latitudeTo
-    longitudeTo
-    date
-    delivered
-```
